@@ -1,0 +1,27 @@
+version: '2.1'
+services:
+  server:
+    image: server
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - /tmp/app:/var/log/app
+    ports:
+      - "3030:3030"
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:

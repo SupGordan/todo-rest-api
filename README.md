@@ -2,7 +2,7 @@
 
 
 ## Todo
-- [ ] Add Docker env
+- [x] Add Docker env
 - [ ] Add Auth
 - [ ] Add Project routes
 - [ ] Add Task routes

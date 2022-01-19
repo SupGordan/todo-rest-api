@@ -25,5 +25,8 @@ RUN apk --no-cache add ca-certificates bash
 RUN mkdir -p /var/log/app
 WORKDIR /app/
 COPY --from=build /app/docker/entrypoint.sh .
+COPY --from=build /app/server .
+COPY --from=build /app/.env .
 RUN ls -la
+RUN chmod +x entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
