@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"todo-rest-api/pkg/app"
 	"todo-rest-api/pkg/e"
+	"todo-rest-api/service/user_service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,16 @@ func PostRegister(c *gin.Context) {
 	}
 	if form.Password != form.Password_repeat {
 		app.Response(http.StatusBadRequest, e.INVALID_PARAMS, "password and password_repeat must be equal")
+		return
+	}
+
+	userReg := user_service.UserRegister{
+		Email:    form.Email,
+		Password: form.Password,
+	}
+
+	if err := userReg.Register(); err != nil {
+		app.Response(http.StatusBadRequest, e.ERROR, err)
 		return
 	}
 

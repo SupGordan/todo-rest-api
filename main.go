@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"todo-rest-api/models"
 	"todo-rest-api/pkg/setting"
 	"todo-rest-api/routers"
 
@@ -12,6 +13,7 @@ import (
 
 func init() {
 	setting.Setup()
+	models.Setup()
 }
 
 func main() {
