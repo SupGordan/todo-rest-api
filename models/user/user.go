@@ -1,8 +1,11 @@
 package user
 
 import (
+	"errors"
 	"todo-rest-api/models"
 	"todo-rest-api/pkg/crypt"
+
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
@@ -28,4 +31,16 @@ func AddUser(data map[string]interface{}) error {
 		return err
 	}
 	return nil
+}
+
+func FindUser(email, password string) (User, error) {
+	var user User
+	err := models.Db.Select("*").Where(User{Email: email}).First(&user).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return User{}, err
+	}
+	if !crypt.CheckPassword(password, user.Password) {
+		return User{}, errors.New("Password not match")
+	}
+	return user, nil
 }

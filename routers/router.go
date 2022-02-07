@@ -15,6 +15,7 @@ func InitRouter() *gin.Engine {
 	r.GET("/ping", api.GetPing)
 
 	r.POST("/register", auth.PostRegister)
+	r.POST("/login", auth.PostLogin)
 
 	return r
 }
